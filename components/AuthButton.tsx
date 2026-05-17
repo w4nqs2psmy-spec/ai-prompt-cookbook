@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { useFavorites } from './FavoritesProvider';
 import type { User } from '@supabase/supabase-js';
 
 type Props = {
@@ -13,8 +12,6 @@ type Props = {
 
 export default function AuthButton({ user, isAdmin }: Props) {
   const router = useRouter();
-  const { savedIds } = useFavorites();
-  const favCount = savedIds.size;
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -35,23 +32,6 @@ export default function AuthButton({ user, isAdmin }: Props) {
 
   return (
     <div className="flex items-center gap-3">
-      <Link
-        href="/suosikit"
-        className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-teal hover:text-teal-dark transition-colors"
-      >
-        Suosikit
-        {favCount > 0 && (
-          <span className="inline-flex items-center justify-center min-w-[1.1rem] h-[1.1rem] px-1 rounded-full text-[10px] font-bold bg-teal text-white leading-none">
-            {favCount}
-          </span>
-        )}
-      </Link>
-      <Link
-        href="/submit"
-        className="hidden sm:inline text-sm font-medium text-teal hover:text-teal-dark transition-colors"
-      >
-        Lähetä prompti
-      </Link>
       {isAdmin && (
         <Link
           href="/admin"

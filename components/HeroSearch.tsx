@@ -1,11 +1,15 @@
 'use client';
 
 import { useState, useMemo, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Prompt } from '@/lib/types';
 import { Profile } from '@/lib/profiles';
 import PromptCard from '@/components/PromptCard';
 import SearchBar from '@/components/SearchBar';
 import FilterSidebar, { Filters } from '@/components/FilterSidebar';
+import Pagination from '@/components/Pagination';
+
+const PAGE_SIZE = 50;
 
 const EMPTY_FILTERS: Filters = {
   subjects: [],
@@ -34,36 +38,100 @@ function applyFilters(prompts: Prompt[], query: string, filters: Filters): Promp
 type Props = {
   initialPrompts: Prompt[];
   profileMap: Record<string, Profile>;
-  /** Pre-fill search from ?search= URL param (set by landing page redirect) */
+  /** Pre-fill search from ?search= URL param */
   initialQuery?: string;
+  /** Pre-fill page from ?page= URL param */
+  initialPage?: number;
 };
 
-export default function HeroSearch({ initialPrompts, profileMap, initialQuery = '' }: Props) {
+export default function HeroSearch({
+  initialPrompts,
+  profileMap,
+  initialQuery = '',
+  initialPage = 1,
+}: Props) {
+  const router = useRouter();
+  const resultsRef = useRef<HTMLDivElement>(null);
+
   const [query, setQuery] = useState(initialQuery);
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'liked'>('newest');
+  const [page, setPage] = useState(() => Math.max(1, initialPage));
 
   /* ── Filter-change fade transition ────────────────────────────────── */
   const [gridVisible, setGridVisible] = useState(true);
   const [gridKey, setGridKey] = useState(0);
   const fadeTimer = useRef<ReturnType<typeof setTimeout>>();
 
-  const handleFilterChange = useCallback((newFilters: Filters) => {
-    clearTimeout(fadeTimer.current);
-    setGridVisible(false);
-    fadeTimer.current = setTimeout(() => {
-      setFilters(newFilters);
+  /* ── URL sync helper ───────────────────────────────────────────────── */
+  const pushPage = useCallback(
+    (newPage: number) => {
+      const params = new URLSearchParams(window.location.search);
+      if (newPage <= 1) {
+        params.delete('page');
+      } else {
+        params.set('page', String(newPage));
+      }
+      const qs = params.toString();
+      router.push(qs ? `?${qs}` : '?', { scroll: false });
+    },
+    [router]
+  );
+
+  /* ── Page change ───────────────────────────────────────────────────── */
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      setPage(newPage);
       setGridKey((k) => k + 1);
-      setGridVisible(true);
-    }, 160);
-  }, []);
+      pushPage(newPage);
+      // Smooth-scroll to the top of the results area
+      requestAnimationFrame(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    },
+    [pushPage]
+  );
 
-  const handleQueryChange = useCallback((q: string) => {
-    setQuery(q);
-    setGridKey((k) => k + 1);
-  }, []);
+  /* ── Filter change (resets to page 1) ─────────────────────────────── */
+  const handleFilterChange = useCallback(
+    (newFilters: Filters) => {
+      clearTimeout(fadeTimer.current);
+      setGridVisible(false);
+      fadeTimer.current = setTimeout(() => {
+        setFilters(newFilters);
+        setPage(1);
+        pushPage(1);
+        setGridKey((k) => k + 1);
+        setGridVisible(true);
+      }, 160);
+    },
+    [pushPage]
+  );
 
+  /* ── Query change (resets to page 1) ──────────────────────────────── */
+  const handleQueryChange = useCallback(
+    (q: string) => {
+      setQuery(q);
+      setPage(1);
+      pushPage(1);
+      setGridKey((k) => k + 1);
+    },
+    [pushPage]
+  );
+
+  /* ── Sort change (resets to page 1) ───────────────────────────────── */
+  const handleSortChange = useCallback(
+    (next: 'newest' | 'popular' | 'liked') => {
+      setSortBy(next);
+      setPage(1);
+      pushPage(1);
+      setGridKey((k) => k + 1);
+    },
+    [pushPage]
+  );
+
+  /* ── Filtered + sorted full result set ────────────────────────────── */
   const results = useMemo(() => {
     const filtered = applyFilters(initialPrompts, query, filters);
     if (sortBy === 'popular') {
@@ -75,13 +143,24 @@ export default function HeroSearch({ initialPrompts, profileMap, initialQuery = 
     return filtered;
   }, [initialPrompts, query, filters, sortBy]);
 
+  /* ── Pagination ────────────────────────────────────────────────────── */
+  const totalCount = results.length;
+  const pageCount = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  // Clamp current page in case filters reduce the total
+  const safePage = Math.min(page, pageCount);
+  const pageResults = results.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  /* ── Labels ────────────────────────────────────────────────────────── */
   const activeFilterCount =
     filters.subjects.length + filters.levels.length + filters.tools.length + filters.useCases.length;
 
-  const resultLabel =
-    results.length === 1
+  const baseLabel =
+    totalCount === 1
       ? '1 tulos'
-      : `${results.length} ${query || activeFilterCount > 0 ? 'tulosta' : 'promptia'}`;
+      : `${totalCount} ${query || activeFilterCount > 0 ? 'tulosta' : 'promptia'}`;
+
+  const resultLabel =
+    pageCount > 1 ? `${baseLabel} (sivu ${safePage}/${pageCount})` : baseLabel;
 
   return (
     <div className="min-h-screen bg-background">
@@ -112,7 +191,7 @@ export default function HeroSearch({ initialPrompts, profileMap, initialQuery = 
           </aside>
 
           {/* Results area */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0" ref={resultsRef}>
             {/* Toolbar */}
             <div className="flex items-center justify-between mb-7 gap-3 flex-wrap">
               <p className="text-sm text-muted">
@@ -123,19 +202,19 @@ export default function HeroSearch({ initialPrompts, profileMap, initialQuery = 
                 {/* Sort toggle */}
                 <div className="flex items-center bg-background border border-warm-border rounded-lg p-0.5 text-xs font-medium">
                   <button
-                    onClick={() => setSortBy('newest')}
+                    onClick={() => handleSortChange('newest')}
                     className={`px-3 py-1.5 rounded-md transition-colors ${sortBy === 'newest' ? 'bg-teal text-white' : 'text-muted hover:text-foreground'}`}
                   >
                     Uusimmat
                   </button>
                   <button
-                    onClick={() => setSortBy('popular')}
+                    onClick={() => handleSortChange('popular')}
                     className={`px-3 py-1.5 rounded-md transition-colors ${sortBy === 'popular' ? 'bg-teal text-white' : 'text-muted hover:text-foreground'}`}
                   >
                     Suosituimmat
                   </button>
                   <button
-                    onClick={() => setSortBy('liked')}
+                    onClick={() => handleSortChange('liked')}
                     className={`px-3 py-1.5 rounded-md transition-colors ${sortBy === 'liked' ? 'bg-teal text-white' : 'text-muted hover:text-foreground'}`}
                   >
                     Tykätyimmät
@@ -162,23 +241,31 @@ export default function HeroSearch({ initialPrompts, profileMap, initialQuery = 
 
             {/* Card grid */}
             {results.length > 0 ? (
-              <div
-                className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 items-start transition-opacity duration-200"
-                style={{ opacity: gridVisible ? 1 : 0 }}
-              >
-                {results.map((prompt, index) => (
-                  <div
-                    key={`${gridKey}-${prompt.id}`}
-                    className="animate-card-in"
-                    style={{ animationDelay: `${Math.min(index * 45, 450)}ms` }}
-                  >
-                    <PromptCard
-                      prompt={prompt}
-                      profile={prompt.submitted_by ? profileMap[prompt.submitted_by] : null}
-                    />
-                  </div>
-                ))}
-              </div>
+              <>
+                <div
+                  className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 items-start transition-opacity duration-200"
+                  style={{ opacity: gridVisible ? 1 : 0 }}
+                >
+                  {pageResults.map((prompt, index) => (
+                    <div
+                      key={`${gridKey}-${prompt.id}`}
+                      className="animate-card-in"
+                      style={{ animationDelay: `${Math.min(index * 45, 450)}ms` }}
+                    >
+                      <PromptCard
+                        prompt={prompt}
+                        profile={prompt.submitted_by ? profileMap[prompt.submitted_by] : null}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <Pagination
+                  page={safePage}
+                  pageCount={pageCount}
+                  onPageChange={handlePageChange}
+                />
+              </>
             ) : (
               <div className="text-center py-24">
                 <div className="text-5xl mb-4">🔍</div>
@@ -227,7 +314,7 @@ export default function HeroSearch({ initialPrompts, profileMap, initialQuery = 
                 onClick={() => setSidebarOpen(false)}
                 className="w-full py-3 rounded-xl bg-teal text-white font-semibold hover:bg-teal-dark transition-colors"
               >
-                Näytä {results.length} tulosta
+                Näytä {totalCount} tulosta
               </button>
             </div>
           </div>

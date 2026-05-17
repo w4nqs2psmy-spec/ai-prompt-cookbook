@@ -1,10 +1,14 @@
 'use client';
 
 import { useState, useMemo, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Skill } from '@/lib/types';
 import SkillCard from '@/components/SkillCard';
 import SearchBar from '@/components/SearchBar';
 import FilterSidebar, { Filters } from '@/components/FilterSidebar';
+import Pagination from '@/components/Pagination';
+
+const PAGE_SIZE = 50;
 
 const EMPTY_FILTERS: Filters = { subjects: [], levels: [], tools: [], useCases: [] };
 
@@ -26,33 +30,93 @@ function applyFilters(skills: Skill[], query: string, filters: Filters): Skill[]
   });
 }
 
-type Props = { initialSkills: Skill[] };
+type Props = {
+  initialSkills: Skill[];
+  /** Pre-fill page from ?page= URL param */
+  initialPage?: number;
+};
 
-export default function SkillsHeroSearch({ initialSkills }: Props) {
+export default function SkillsHeroSearch({ initialSkills, initialPage = 1 }: Props) {
+  const router = useRouter();
+  const resultsRef = useRef<HTMLDivElement>(null);
+
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'liked'>('newest');
+  const [page, setPage] = useState(() => Math.max(1, initialPage));
+
   const [gridVisible, setGridVisible] = useState(true);
   const [gridKey, setGridKey] = useState(0);
   const fadeTimer = useRef<ReturnType<typeof setTimeout>>();
 
-  const handleFilterChange = useCallback((newFilters: Filters) => {
-    clearTimeout(fadeTimer.current);
-    setGridVisible(false);
-    fadeTimer.current = setTimeout(() => {
-      setFilters(newFilters);
+  /* ── URL sync helper ───────────────────────────────────────────────── */
+  const pushPage = useCallback(
+    (newPage: number) => {
+      const params = new URLSearchParams(window.location.search);
+      if (newPage <= 1) {
+        params.delete('page');
+      } else {
+        params.set('page', String(newPage));
+      }
+      const qs = params.toString();
+      router.push(qs ? `?${qs}` : '?', { scroll: false });
+    },
+    [router]
+  );
+
+  /* ── Page change ───────────────────────────────────────────────────── */
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      setPage(newPage);
       setGridKey((k) => k + 1);
-      setGridVisible(true);
-    }, 160);
-  }, []);
+      pushPage(newPage);
+      requestAnimationFrame(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    },
+    [pushPage]
+  );
 
-  const handleQueryChange = useCallback((q: string) => {
-    setQuery(q);
-    setGridKey((k) => k + 1);
-  }, []);
+  /* ── Filter change (resets to page 1) ─────────────────────────────── */
+  const handleFilterChange = useCallback(
+    (newFilters: Filters) => {
+      clearTimeout(fadeTimer.current);
+      setGridVisible(false);
+      fadeTimer.current = setTimeout(() => {
+        setFilters(newFilters);
+        setPage(1);
+        pushPage(1);
+        setGridKey((k) => k + 1);
+        setGridVisible(true);
+      }, 160);
+    },
+    [pushPage]
+  );
 
-  const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'liked'>('newest');
+  /* ── Query change (resets to page 1) ──────────────────────────────── */
+  const handleQueryChange = useCallback(
+    (q: string) => {
+      setQuery(q);
+      setPage(1);
+      pushPage(1);
+      setGridKey((k) => k + 1);
+    },
+    [pushPage]
+  );
 
+  /* ── Sort change (resets to page 1) ───────────────────────────────── */
+  const handleSortChange = useCallback(
+    (next: 'newest' | 'popular' | 'liked') => {
+      setSortBy(next);
+      setPage(1);
+      pushPage(1);
+      setGridKey((k) => k + 1);
+    },
+    [pushPage]
+  );
+
+  /* ── Filtered + sorted full result set ────────────────────────────── */
   const results = useMemo(() => {
     const filtered = applyFilters(initialSkills, query, filters);
     if (sortBy === 'popular') {
@@ -64,8 +128,23 @@ export default function SkillsHeroSearch({ initialSkills }: Props) {
     return filtered;
   }, [initialSkills, query, filters, sortBy]);
 
-  const activeFilterCount = filters.subjects.length + filters.levels.length + filters.tools.length + filters.useCases.length;
-  const resultLabel = results.length === 1 ? '1 tulos' : `${results.length} ${query || activeFilterCount > 0 ? 'tulosta' : 'skilliä'}`;
+  /* ── Pagination ────────────────────────────────────────────────────── */
+  const totalCount = results.length;
+  const pageCount = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  const safePage = Math.min(page, pageCount);
+  const pageResults = results.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  /* ── Labels ────────────────────────────────────────────────────────── */
+  const activeFilterCount =
+    filters.subjects.length + filters.levels.length + filters.tools.length + filters.useCases.length;
+
+  const baseLabel =
+    totalCount === 1
+      ? '1 tulos'
+      : `${totalCount} ${query || activeFilterCount > 0 ? 'tulosta' : 'skilliä'}`;
+
+  const resultLabel =
+    pageCount > 1 ? `${baseLabel} (sivu ${safePage}/${pageCount})` : baseLabel;
 
   return (
     <div className="min-h-screen bg-background">
@@ -104,7 +183,7 @@ export default function SkillsHeroSearch({ initialSkills }: Props) {
           </aside>
 
           {/* Results */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0" ref={resultsRef}>
             <div className="flex items-center justify-between mb-7 gap-3 flex-wrap">
               <p className="text-sm text-muted">
                 <span className="font-serif text-foreground text-base font-semibold">{resultLabel}</span>
@@ -113,19 +192,19 @@ export default function SkillsHeroSearch({ initialSkills }: Props) {
                 {/* Sort toggle */}
                 <div className="flex items-center bg-background border border-warm-border rounded-lg p-0.5 text-xs font-medium">
                   <button
-                    onClick={() => setSortBy('newest')}
+                    onClick={() => handleSortChange('newest')}
                     className={`px-3 py-1.5 rounded-md transition-colors ${sortBy === 'newest' ? 'bg-teal text-white' : 'text-muted hover:text-foreground'}`}
                   >
                     Uusimmat
                   </button>
                   <button
-                    onClick={() => setSortBy('popular')}
+                    onClick={() => handleSortChange('popular')}
                     className={`px-3 py-1.5 rounded-md transition-colors ${sortBy === 'popular' ? 'bg-teal text-white' : 'text-muted hover:text-foreground'}`}
                   >
                     Suosituimmat
                   </button>
                   <button
-                    onClick={() => setSortBy('liked')}
+                    onClick={() => handleSortChange('liked')}
                     className={`px-3 py-1.5 rounded-md transition-colors ${sortBy === 'liked' ? 'bg-teal text-white' : 'text-muted hover:text-foreground'}`}
                   >
                     Tykätyimmät
@@ -147,20 +226,28 @@ export default function SkillsHeroSearch({ initialSkills }: Props) {
             </div>
 
             {results.length > 0 ? (
-              <div
-                className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 items-start transition-opacity duration-200"
-                style={{ opacity: gridVisible ? 1 : 0 }}
-              >
-                {results.map((skill, index) => (
-                  <div
-                    key={`${gridKey}-${skill.id}`}
-                    className="animate-card-in"
-                    style={{ animationDelay: `${Math.min(index * 45, 450)}ms` }}
-                  >
-                    <SkillCard skill={skill} />
-                  </div>
-                ))}
-              </div>
+              <>
+                <div
+                  className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 items-start transition-opacity duration-200"
+                  style={{ opacity: gridVisible ? 1 : 0 }}
+                >
+                  {pageResults.map((skill, index) => (
+                    <div
+                      key={`${gridKey}-${skill.id}`}
+                      className="animate-card-in"
+                      style={{ animationDelay: `${Math.min(index * 45, 450)}ms` }}
+                    >
+                      <SkillCard skill={skill} />
+                    </div>
+                  ))}
+                </div>
+
+                <Pagination
+                  page={safePage}
+                  pageCount={pageCount}
+                  onPageChange={handlePageChange}
+                />
+              </>
             ) : (
               <div className="text-center py-24">
                 <div className="text-5xl mb-4">🔍</div>
@@ -194,7 +281,7 @@ export default function SkillsHeroSearch({ initialSkills }: Props) {
             <FilterSidebar filters={filters} onChange={handleFilterChange} />
             <div className="mt-8">
               <button onClick={() => setSidebarOpen(false)} className="w-full py-3 rounded-xl bg-teal text-white font-semibold hover:bg-teal-dark transition-colors">
-                Näytä {results.length} tulosta
+                Näytä {totalCount} tulosta
               </button>
             </div>
           </div>
