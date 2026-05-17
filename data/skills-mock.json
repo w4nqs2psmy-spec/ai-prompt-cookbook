@@ -1,0 +1,360 @@
+[
+  {
+    "id": "s1",
+    "title": "Kurssiarvioinnin suunnittelu AI:n avulla",
+    "description": "Rakenna kattava arviointikokonaisuus kurssin osaamistavoitteista lopulliseen arviointimatriisiin — vaihe vaiheelta.",
+    "subject": "general",
+    "level": "higher_education",
+    "tool": "any",
+    "use_case": "assessment",
+    "tags": [
+      "arviointi",
+      "korkeakoulu",
+      "rubric",
+      "osaamistavoitteet"
+    ],
+    "tips": "Aloita aina osaamistavoitteista — kaikki muu rakentuu niiden varaan. Kirjaa konkreettinen kurssiaihe jo ensimmäiseen promptiin.",
+    "is_pro": false,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-09-01T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Määrittele osaamistavoitteet",
+        "description": "Luo kurssille selkeät, mitattavat osaamistavoitteet, jotka ohjaavat kaikkea arviointia.",
+        "prompt_text": "Olet kokenut kurssisuunnittelun asiantuntija. Kurssini nimi on [KURSSIN NIMI] ja se on suunnattu [KOHDERYHMÄ, esim. 'toisen vuoden yliopisto-opiskelijoille']. Kurssin kesto on [KESTO, esim. '10 viikkoa'].\n\nTehtäväsi on auttaa minua muotoilemaan selkeät, mitattavat osaamistavoitteet tälle kurssille. Luo 5–7 osaamistavoitetta, jotka:\n- Alkavat toimintaverbillä (osaa, ymmärtää, analysoi, soveltaa, arvioi, tuottaa)\n- Ovat saavutettavissa kurssin aikana\n- Ovat arvioitavissa konkreettisesti\n- Kattavat eritasoista osaamista (tieto, ymmärrys, soveltaminen)\n\nEsitä tavoitteet luettelona ja selitä lyhyesti, miksi kukin tavoite on kurssin kannalta olennainen."
+      },
+      {
+        "step_number": 2,
+        "title": "Luo arviointikriteerit",
+        "description": "Muodosta kolmiportaiset arviointikriteerit edellisen vaiheen osaamistavoitteiden pohjalta.",
+        "prompt_text": "Käytä seuraavia osaamistavoitteita pohjana:\n[LIITÄ TÄHÄN EDELLISEN VAIHEEN OSAAMISTAVOITTEET]\n\nLuo näille tavoitteille selkeät arviointikriteerit, jotka kattavat kolme tasoa:\n- Erinomainen (5 tai A)\n- Hyvä (3–4 tai B–C)\n- Tyydyttävä (1–2 tai D–F)\n\nMuotoile kriteerit niin, että sekä opiskelija että opettaja ymmärtävät konkreettisesti, mitä osaamista kukin taso edellyttää. Käytä selkeää, arvottavaa kieltä."
+      },
+      {
+        "step_number": 3,
+        "title": "Suunnittele arviointitehtävät",
+        "description": "Valitse monipuoliset arviointitehtävätyypit, jotka kattavat kaikki osaamistavoitteet.",
+        "prompt_text": "Kurssini osaamistavoitteet ovat:\n[LIITÄ OSAAMISTAVOITTEET]\n\nArviointikriteerini ovat:\n[LIITÄ ARVIOINTIKRITEERIT]\n\nSuunnittele 3–4 erilaista arviointitehtävää, jotka yhdessä kattavat kaikki osaamistavoitteet. Käytä monipuolisia tehtävätyyppejä, kuten:\n- Essee tai raportti\n- Projekti tai portfolio\n- Esitys tai demonstraatio\n- Tentti tai testi\n\nKuvaile jokaisen tehtävän tarkoitus, kesto, arviointipaino (%) ja yhteys osaamistavoitteisiin."
+      },
+      {
+        "step_number": 4,
+        "title": "Tee arviointimatriisi",
+        "description": "Rakenna konkreettinen rubric yhdelle valitulle arviointitehtävälle.",
+        "prompt_text": "Luo selkeä arviointimatriisi (rubric) seuraavaan tehtävään:\n[TEHTÄVÄN KUVAUS]\n\nMatriisissa tulee olla:\n- Vasemmassa sarakkeessa arvioinnin kriteerit (3–5 kriteeriä)\n- Ylärivillä suoritustasot: Erinomainen / Hyvä / Tyydyttävä / Heikko\n- Jokaisessa solussa konkreettinen kuvaus kyseisen tason suorituksesta\n\nLisää matriisiin myös kunkin kriteerin painotus (%) niin, että yhteissumma on 100 %."
+      }
+    ]
+  },
+  {
+    "id": "s2",
+    "title": "Eriyttävän oppitunnin rakentaminen",
+    "description": "Tunnista oppilaiden lähtötaso ja rakenna saman oppimistunnin materiaalit kolmelle eri taitotasolle.",
+    "subject": "general",
+    "level": "lower_secondary",
+    "tool": "any",
+    "use_case": "differentiation",
+    "tags": [
+      "eriyttäminen",
+      "oppimistasot",
+      "tukiopetus",
+      "diagnosointi"
+    ],
+    "tips": "Korvaa hakasulkuun merkityt kohdat mahdollisimman tarkalla kuvauksella. Mitä spesifimpi aihe ja lähtötaso, sitä käyttökelpoisemmat materiaalit.",
+    "is_pro": false,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-09-05T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Kartoita lähtötaso",
+        "description": "Luo diagnostinen ennakkotehtävä, jonka avulla tunnistat oppilaiden taitotasot ennen opetusjakson alkua.",
+        "prompt_text": "Olet alakoulun tai yläkoulun opettaja. Opetan aiheesta [AIHE, esim. 'murtoluvut' tai 'toisen maailmansodan syyt'] luokalle [LUOKKA].\n\nLuo lyhyt, 5–8 kysymyksen diagnostinen ennakkotehtävä, jonka avulla voin kartoittaa oppilaiden osaamistason ennen opetusjakson alkua.\n\nTehtävät tulee olla:\n- Nopeasti vastattavia (korkeintaan 15 min yhteensä)\n- Vaikeustasoltaan nousevia (helposta vaikeaan)\n- Monipuolisia (monivalinta, lyhyt vastaus, käsitekartta tms.)\n- Analysoitavissa niin, että tunnistan selkeästi tuen tarpeessa olevat, perusuran ja edistyneet oppijat"
+      },
+      {
+        "step_number": 2,
+        "title": "Luo kolmen tason materiaalit",
+        "description": "Tuota samasta aiheesta kolme erilaista tehtäväpakettia eri taitotasoille.",
+        "prompt_text": "Aiheeni on [AIHE] ja oppilaitani on kolmella tasolla:\n- Tuen tarpeessa olevat: [KUVAUS LÄHTÖTASOSTA]\n- Perusura: [KUVAUS LÄHTÖTASOSTA]\n- Edistyneet: [KUVAUS LÄHTÖTASOSTA]\n\nLuo kullekin tasolle sopiva oppimateriaali tai tehtäväpaketti samasta aiheesta. Jokaisen tason materiaalin tulee:\n- Olla saman oppimistunnin pituinen\n- Johtaa samaan oppimistavoitteeseen eri reittejä\n- Olla motivoiva ja ikätasolle sopiva\n\nKirjoita materiaalit sellaiseen muotoon, että ne ovat suoraan tulostettavissa tai kopioitavissa oppilaille."
+      },
+      {
+        "step_number": 3,
+        "title": "Suunnittele tukikysymykset",
+        "description": "Luo jokaiselle tasolle scaffolding-kysymykset, jotka ohjaavat eteenpäin paljastamatta vastausta.",
+        "prompt_text": "Aiheeni on [AIHE]. Olen luonut kolmen tason tehtävät.\n\nLuo jokaiselle tasolle 4–6 tukikysymystä (scaffolding questions), jotka:\n- Ohjaavat oppilasta eteenpäin, jos hän jumiutuu\n- Eivät paljasta vastausta suoraan\n- Aktivoivat aikaisemman tiedon\n- Etenevät konkreettisesta abstraktimpaan\n\nMuotoile kysymykset niin, että voin käyttää niitä suullisessa ohjauksessa tai kirjoittaa ne tehtäväpaperiin vihjeiksi."
+      }
+    ]
+  },
+  {
+    "id": "s3",
+    "title": "Ryhmätyön fasilitointi tekoälyllä",
+    "description": "Rakenna koko ryhmätyöprosessi roolien jakamisesta vertaisarviointiin — AI auttaa jokaisessa vaiheessa.",
+    "subject": "general",
+    "level": "higher_education",
+    "tool": "any",
+    "use_case": "group_work",
+    "tags": [
+      "ryhmätyö",
+      "yhteisöllinen oppiminen",
+      "vertaisarviointi",
+      "fasilitointi"
+    ],
+    "tips": "Tämä skill sopii myös yläkouluun ja lukioon — vaihda vain ryhmäkoko ja aihe. Vaihe 4 toimii parhaiten, kun oppilaat ovat ensin saaneet suorittaa ryhmätyön loppuun.",
+    "is_pro": false,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-09-10T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Jaa roolit",
+        "description": "Luo selkeät roolikuvaukset ryhmän jäsenille niin, että jokainen tietää vastuunsa.",
+        "prompt_text": "Suunnittelen ryhmätyötä aiheesta [AIHE] luokalle tai opiskelijaryhmälle, jossa on [RYHMÄKOKO, esim. '4 hengen ryhmiä'].\n\nLuo selkeät roolikuvaukset kullekin ryhmän jäsenelle. Jokaisen roolin tulee sisältää:\n- Roolin nimi (esim. Projektijohtaja, Tiedonhakija, Esittäjä, Kriitikko)\n- Konkreettiset tehtävät ja vastuut\n- Kontribuutio ryhmätyön lopputulokseen\n- Lyhyt ohje siitä, miten toimia roolissa tehokkaasti\n\nVarmista, että roolit täydentävät toisiaan eikä mikään osa-alue jää katveeseen."
+      },
+      {
+        "step_number": 2,
+        "title": "Luo ryhmätehtävän brief",
+        "description": "Kirjoita selkeä ja motivoiva brief suoraan oppilaille.",
+        "prompt_text": "Ryhmätyöni aihe on [AIHE] ja tavoite on [TAVOITE]. Ryhmissä on [JÄSENMÄÄRÄ] jäsentä. Aikaa on [KESTO].\n\nLuo selkeä ryhmätehtäväbrieffi, joka sisältää:\n1. Tehtävän johdanto ja konteksti (1 kappale)\n2. Konkreettinen lopputulos tai tuote (mitä tuotetaan)\n3. Prosessin vaiheet aikatauluineen\n4. Arviointikriteerit\n5. Käytettävissä olevat resurssit ja materiaalit\n\nKirjoita brief oppilaille tai opiskelijoille suoraan — selkeällä, innostavalla kielellä."
+      },
+      {
+        "step_number": 3,
+        "title": "Suunnittele välitarkistuspisteet",
+        "description": "Pidä ryhmät oikealla polulla ilman liiallista ohjaamista.",
+        "prompt_text": "Ryhmätyöni kesto on [KESTO] ja lopputulos on [LOPPUTULOS].\n\nLuo 2–3 välitarkistuspisteelle (checkpoint) rakenne. Jokainen tarkistuspiste sisältää:\n- Ajoitus (esim. 'tunnin puolivälissä' tai 'viikon 2 lopussa')\n- 3–4 tarkistuskysymystä ryhmälle oman työn arviointiin\n- Opettajan observointilomake: mitä seurata jokaisessa ryhmässä\n- Toimenpiteet, jos ryhmä on jäljessä tai hukassa\n\nTavoitteena on, että ryhmät pysyvät oikealla polulla ilman liiallista ohjaamista."
+      },
+      {
+        "step_number": 4,
+        "title": "Arvioi ryhmäprosessi",
+        "description": "Laadi vertaisarviointilomake, jonka jokainen ryhmän jäsen täyttää muista ryhmänsä jäsenistä.",
+        "prompt_text": "Ryhmätyöni on päättynyt. Luo vertaisarviointilomake, jonka jokainen ryhmän jäsen täyttää muista ryhmänsä jäsenistä.\n\nLomakkeen tulee mitata:\n- Panos ryhmätyöhön (osallistuminen, tehtävien tekeminen)\n- Yhteistyötaidot (kommunikointi, kuuntelu, konfliktien ratkaisu)\n- Luotettavuus (aikatauluissa pysyminen, lupausten pitäminen)\n- Rohkaiseminen (muiden tukeminen, positiivinen asenne)\n\nKäytä 5-portaista asteikkoa ja jätä tila kirjalliselle perustelulle. Lisää myös itsearviointiosio."
+      }
+    ]
+  },
+  {
+    "id": "s4",
+    "title": "Oppilaiden kirjoitustaidon kehittäminen",
+    "description": "Analysoi kirjoitusnäyte, luo eritasoisia harjoituksia ja rakenna tehokas palautemalli — kolmessa vaiheessa.",
+    "subject": "languages",
+    "level": "upper_secondary",
+    "tool": "any",
+    "use_case": "feedback",
+    "tags": [
+      "kirjoittaminen",
+      "äidinkieli",
+      "palaute",
+      "harjoitustehtävät"
+    ],
+    "tips": "Vaihe 1 toimii parhaiten oikealla oppilastekstillä tai oppikirjan esimerkkitekstillä. Vaihe 3 säästää eniten aikaa — käytä sitä jokaisella arviointikierroksella.",
+    "is_pro": false,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-09-15T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Analysoi esimerkkiteksti",
+        "description": "Tunnista opetustunnin fokus analysoimalla oppilaan tai oppikirjan teksti opetuksen näkökulmasta.",
+        "prompt_text": "Olen äidinkielen tai vieraan kielen opettaja. Kopioi alla oleva oppilaiden kirjoitustaitoja kehittävä opetusteksti tai oppilaan kirjoittama teksti:\n\n[LIITÄ TEKSTI TÄHÄN]\n\nAnalysoi teksti opetuksen näkökulmasta:\n1. Tunnista 3–5 kirjoittamisen vahvuutta, joita voin nostaa esille\n2. Tunnista 3–5 kehittämiskohtaa, joihin oppitunti kannattaa kohdistaa\n3. Ehdota, mitä kirjoittamisen osa-aluetta (rakenne, sanasto, kohesiivisuus, tyyli, oikeinkirjoitus) tulisi painottaa\n4. Ehdota sopivia harjoitustyyppejä tunnistettujen kehittämiskohteiden harjoitteluun"
+      },
+      {
+        "step_number": 2,
+        "title": "Luo kirjoitusharjoituksia",
+        "description": "Tuota eritasoisia harjoitustehtäviä valitulle kirjoittamisen osa-alueelle.",
+        "prompt_text": "Kirjoitustaitoni kehittämiskohde on [KEHITTÄMISKOHDE, esim. 'argumentoivan tekstin rakenne' tai 'siirtymäilmaukset'].\n\nLuo 4–5 eritasoista kirjoitusharjoitusta tämän osa-alueen harjoitteluun:\n- Helppo (esim. lauseiden täydentäminen, mallin mukailu)\n- Keskitaso (esim. kappaleen kirjoittaminen ohjatusti)\n- Haastava (esim. itsenäinen lyhyt teksti)\n\nJokainen harjoitus sisältää:\n- Selkeän ohjeen oppilaalle\n- Konkreettisen esimerkin tai mallin\n- Sopivan pituustavoitteen\n- Itsearvioinnin tarkistuslistan"
+      },
+      {
+        "step_number": 3,
+        "title": "Rakenna palautemalli",
+        "description": "Luo strukturoitu palautepohja, jolla voit antaa rakentavaa ja tehokasta kirjallista palautetta.",
+        "prompt_text": "Opetan kirjoittamista aiheesta [AIHE] ja arvioin oppilaiden tekstejä. Luo strukturoitu palautemalli, jota voin käyttää kirjalliseen palautteenantoon.\n\nPalautteessa tulee olla:\n1. Vahvuuden tunnustaminen (1–2 asiaa, jotka toimivat hyvin)\n2. Kehittämiskohde 1: konkreettinen ongelma + esimerkki tekstistä + korjausehdotus\n3. Kehittämiskohde 2: konkreettinen ongelma + esimerkki tekstistä + korjausehdotus\n4. Seuraava askel: yksi konkreettinen tehtävä seuraavaksi kirjoituskerraksi\n5. Arvosana tai sanallinen kokonaisarvio\n\nKirjoita malli niin, että pystyn täyttämään sen nopeasti kunkin oppilaan tekstin kohdalla."
+      }
+    ]
+  },
+  {
+    "id": "s5",
+    "title": "Matemaattisen ongelmanratkaisun ohjaaminen",
+    "description": "Luo sanallisia tehtäviä, rakenna vihjeportaat ja ohjaa ratkaisun purkaminen — kaikki neljässä vaiheessa.",
+    "subject": "math",
+    "level": "lower_secondary",
+    "tool": "any",
+    "use_case": "lesson_planning",
+    "tags": [
+      "matematiikka",
+      "ongelmanratkaisu",
+      "scaffolding",
+      "sanallinen tehtävä"
+    ],
+    "tips": "Vaihe 2 on erityisen arvokas — vihjeportaat vähentävät häsläämistä tunnilla huomattavasti. Testaa tehtävät itse ennen tunnille menoa.",
+    "is_pro": false,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-09-20T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Luo sanallisia tehtäviä",
+        "description": "Rakenna nuorten arkeen liittyviä, eri vaikeustason sanallisia matematiikan tehtäviä.",
+        "prompt_text": "Olen matematiikan opettaja ja opetan aiheesta [AIHE, esim. 'prosenttilaskenta' tai 'yhtälöt'] luokalle [LUOKKA].\n\nLuo 6 sanallista matematiikan tehtävää, jotka:\n- Liittyvät nuorten arkeen ja kiinnostuksen kohteisiin (urheilu, some, musiikki, ruoka, tms.)\n- Ovat keskenään eri vaikeustasoja (2 helppoa, 2 keskitasoa, 2 haastavaa)\n- Harjoittavat monivaiheista ongelmanratkaisua, eivät pelkkää laskemista\n- Ovat selkeitä ja yksiselitteisiä\n\nMerkitse jokaisen tehtävän vaikeustaso ja tarvittavat esitiedot."
+      },
+      {
+        "step_number": 2,
+        "title": "Rakenna vihjeportaat",
+        "description": "Luo jokaiselle tehtävälle kolmiportainen vihjejärjestelmä, jota oppilaat voivat käyttää tarvittaessa.",
+        "prompt_text": "Käytän seuraavia matematiikan sanallisia tehtäviä tunnillani:\n[LIITÄ TEHTÄVÄT]\n\nLuo jokaiselle tehtävälle kolmiportainen vihjejärjestelmä:\n- Vihje 1: Yleinen suuntaohje (ei paljasta ratkaisumenetelmää)\n- Vihje 2: Ohjaa oikeaan ratkaisumenetelmään (ei laske)\n- Vihje 3: Näyttää ensimmäisen laskuvaiheen (oppilas laskee loput itse)\n\nVihjeportaiden tarkoitus on, että oppilas voi ottaa niitä yksi kerrallaan ja kokeilla ennen seuraavaa vinkkiä."
+      },
+      {
+        "step_number": 3,
+        "title": "Suunnittele ratkaisun purkaminen",
+        "description": "Rakenna vaiheistus yhteiseen purku-oppituntiin kysymyksineen ja visualisointiehdotuksineen.",
+        "prompt_text": "Matematiikan tehtäväni on:\n[TEHTÄVÄ]\n\nOikea vastaus on: [VASTAUS]\n\nLuo vaiheittainen ratkaisuohjaus, jonka voin käyttää yhteisessä purku-oppitunnilla:\n1. Kirjoita koko ratkaisu auki step-by-step, perusteluineen\n2. Tunnista kohdat, joissa oppilaat todennäköisesti tekevät virheitä\n3. Luo kysymykset, joilla aktivoin oppilaiden ajattelua joka vaiheen jälkeen ('Mitä tehdään seuraavaksi? Miksi?')\n4. Ehdota, miten visuaalistaa ratkaisu taululle tai dialla"
+      },
+      {
+        "step_number": 4,
+        "title": "Luo soveltavia jatkotehtäviä",
+        "description": "Tarjoa edistyneille oppilaille tehtäviä, jotka laajentavat opittua uusiin konteksteihin.",
+        "prompt_text": "Oppilaat ovat oppineet [AIHE]. Perustehtävät on tehty.\n\nLuo 3–4 soveltavaa jatkotehtävää edistyneille oppilaille, jotka:\n- Laajentavat opittua uuteen kontekstiin\n- Yhdistävät useita matematiikan käsitteitä\n- Vaativat luovaa ongelmanratkaisua tai matemaattista perustelua\n- Ovat toteuttavissa itsenäisesti tai parityönä\n\nMerkitse jokaisen tehtävän tavoite ja sopiva lisäaika perustuntiin verrattuna."
+      }
+    ]
+  },
+  {
+    "id": "s6",
+    "title": "Startup-idean validointi opiskelijoille",
+    "description": "Ohjaa opiskelijaryhmiä viiden vaiheen prosessilla ongelman määrittelystä ensimmäiseen validointikokeeseen.",
+    "subject": "entrepreneurship",
+    "level": "higher_education",
+    "tool": "any",
+    "use_case": "creative_tasks",
+    "tags": [
+      "startup",
+      "yrittäjyys",
+      "lean canvas",
+      "validointi",
+      "liikeideа"
+    ],
+    "tips": "Käytä tätä skillиä kursseilla, joissa opiskelijat kehittävät omia liikeideoitaan. Jokainen vaihe toimii parhaiten ryhmäkeskustelun ja AI-analyysin yhdistelmänä.",
+    "is_pro": true,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-10-01T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Määrittele ongelma",
+        "description": "Terävöitä liikeideaan liittyvä ongelma niin, että se on riittävän konkreettinen ja relevantti.",
+        "prompt_text": "Olet startup-mentorin roolissa. Opiskelijaryhmälläni on seuraava liikeideakuvaus:\n[LIITÄ LIIKEIDEA TÄHÄN]\n\nAuta terävöittämään ongelman määrittelyä vastaamalla kysymyksiin:\n1. Mikä on konkreettinen ongelma, johon ratkaisu pureutuu? (1 selkeä lause)\n2. Kenellä tämä ongelma on? (tarkin mahdollinen kohderyhmä)\n3. Miten he nykyisin ratkaisevat tämän ongelman? (nykytila)\n4. Miksi nykyinen ratkaisu on riittämätön?\n5. Kuinka suuri on ongelma? (frekvenssi, intensiteetti, maksuvalmius)\n\nAnna konkreettinen palaute siitä, onko ongelma riittävän terävä vai vielä liian epämääräinen."
+      },
+      {
+        "step_number": 2,
+        "title": "Kartoita asiakassegmentti",
+        "description": "Tunnista täsmällisin mahdollinen ensimmäinen kohderyhmä (beachhead market) perusteluineen.",
+        "prompt_text": "Liikeideamme ratkaisee seuraavan ongelman: [ONGELMA]\n\nAuta meitä määrittelemään täsmällisin mahdollinen ensimmäinen asiakassegmentti (beachhead market).\n\nKuvaile ihanneasiakaspersona:\n- Demografiset tiedot (ikä, ammatti, elämäntilanne)\n- Psykograafiset tiedot (arvot, tavoitteet, pelot)\n- Käyttäytyminen nykyisin (miten he toimivat nyt)\n- Kipupisteet ja turhautumiset\n- Mitä he haluavat saavuttaa\n\nPerustele, miksi juuri tämä segmentti on paras aloituspiste, eikä joku muu mahdollinen kohderyhmä."
+      },
+      {
+        "step_number": 3,
+        "title": "Testaa arvolupaus",
+        "description": "Arvioi arvolupauksen selkeys, erottuvuus ja uskottavuus kriittisesti.",
+        "prompt_text": "Meidän liikeideamme on: [LIIKEIDEA]\nKohderyhmämme on: [KOHDERYHMÄ]\n\nArvolupaus (value proposition) on:\n[KIRJOITA ARVOLUPAUS TÄHÄN]\n\nTestaa arvolupaus kriittisesti:\n1. Onko se selkeä ja ymmärrettävä 10 sekunnissa?\n2. Onko se erottuva kilpailijoista?\n3. Onko se uskottava kohderyhmälle?\n4. Vastaako se todelliseen tarpeeseen (ei kuviteltuun)?\n5. Onko sillä mitattava lupaus?\n\nAnna arvolupaus pisteet 1–5 jokaisessa kohdassa ja ehdota konkreettinen parannusehdotus."
+      },
+      {
+        "step_number": 4,
+        "title": "Rakenna Lean Canvas",
+        "description": "Täytä kaikki Lean Canvasin yhdeksän osiota ja merkitse, mitkä ovat oletuksia.",
+        "prompt_text": "Täytetään Lean Canvas -malli liikeidealle:\n[LIIKEIDEA]\n\nTäytä jokainen Lean Canvas -osio konkreettisesti:\n1. Ongelma (3 tärkeintä ongelmaa)\n2. Asiakassegmentit (kuka on varhainen omaksuja)\n3. Arvolupaus (miksi sinut valitaan)\n4. Ratkaisu (3 tärkeintä ominaisuutta)\n5. Kanavat (miten tavoitat asiakkaat)\n6. Tulovirrat (mistä maksetaan ja paljonko)\n7. Kustannusrakenne (mitkä ovat suurimmat kulut)\n8. Avainmittarit (miten mittaat menestystä)\n9. Epäreilu kilpailuetu (mitä ei voi kopioida)\n\nMerkitse, mitkä kohdat ovat oletuksia (ei vielä validoitu) ja mitkä faktoja."
+      },
+      {
+        "step_number": 5,
+        "title": "Suunnittele ensimmäinen testi",
+        "description": "Rakenna nopea, halpa validointikoe kriittisimmän oletuksen testaamiseksi.",
+        "prompt_text": "Lean Canvasimme tärkein validoimaton oletus on:\n[KRIITTISIN OLETUS]\n\nSuunnittele mahdollisimman nopea ja halpa validointikoe (experiment), jonka voimme toteuttaa 1–2 viikossa ilman varsinaista tuotetta.\n\nKokeen suunnitelma:\n1. Mitä testaamme? (hypoteesi selkeästi)\n2. Miten testaamme? (konkreettinen toimenpide)\n3. Keitä testaamme? (kohdehenkilöt, montako)\n4. Mitä mittaamme? (selkeä success metric)\n5. Milloin päätämme, onko hypoteesi oikea vai väärä? (päätöskriteeri)\n\nEhdota kolme eri testivaihtoehtoa eri resurssitarpeilla (nopea/halpa, keskitaso, perusteellinen)."
+      }
+    ]
+  },
+  {
+    "id": "s7",
+    "title": "Historian lähdeanalyysi",
+    "description": "Ohjaa oppilaat syvälliseen historiallisten lähteiden analyysiin: kontekstualisoinnista kriittiseen vertailuun.",
+    "subject": "history",
+    "level": "upper_secondary",
+    "tool": "any",
+    "use_case": "research",
+    "tags": [
+      "historia",
+      "lähdeanalyysi",
+      "kriittinen ajattelu",
+      "historiallinen ajattelu"
+    ],
+    "tips": "Parhaat tulokset saavutat, kun käytät Vaihe 1:ssä oppilaille ennestään tuntematonta primäärilähdettä. Vaihe 3 toimii myös vertailevan historiankirjoituksen opettamisessa.",
+    "is_pro": true,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-10-05T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Kontekstualisoi lähde",
+        "description": "Rakenna lähteelle historiallinen konteksti, jonka oppilaat tarvitsevat analyysin pohjaksi.",
+        "prompt_text": "Olen historian opettaja ja analysoimme seuraavaa historiallista lähdettä:\n\n[LIITÄ LÄHDE TAI LÄHTEEN KUVAUS]\n\nLähde on peräisin ajalta: [AIKAKAUSI]\n\nAuta luomaan lähteen historiallinen konteksti oppilaille:\n1. Mistä historiallisesta tilanteesta tai tapahtumasta on kyse?\n2. Kuka on lähteen tekijä ja mikä on hänen taustansa?\n3. Mikä oli lähteen alkuperäinen tarkoitus ja kohdeyleisö?\n4. Mitkä historialliset tapahtumat tai kehityskulut vaikuttivat lähteen syntyyn?\n5. Miten tämä lähde asettuu laajempaan historialliseen kertomukseen?\n\nKirjoita konteksti sellaiseen muotoon, että voin käyttää sitä suoraan oppilaiden orientaatiotehtävänä."
+      },
+      {
+        "step_number": 2,
+        "title": "Ohjaa kriittistä analyysia",
+        "description": "Luo analyysikysymykset, jotka johdattavat oppilaan lähteen sisällöstä sen rajoituksiin.",
+        "prompt_text": "Historiallinen lähteemme on: [LÄHDE TAI LYHYT KUVAUS]\n\nLuo 10–12 kriittisen analyysin kysymystä, jotka ohjaavat oppilaan syväanalyysiin.\n\nKysymysten tulee kattaa seuraavat tasot:\n- Lähteen sisältö (mitä sanotaan?)\n- Lähteen tekijä ja luotettavuus (kuka sanoo ja miksi?)\n- Lähteen konteksti (milloin ja missä tilanteessa?)\n- Lähteen rajoitukset (mitä ei sanota? kenen ääni puuttuu?)\n- Lähteen merkitys (mitä tämä kertoo aikakaudesta?)\n\nJärjestä kysymykset etenevän analyysin mukaan yksinkertaisesta monimutkaiseen."
+      },
+      {
+        "step_number": 3,
+        "title": "Vertaile näkökulmia",
+        "description": "Rakenna vertailukehikko useamman lähteen näkökulmien tarkasteluun.",
+        "prompt_text": "Olemme analysoineet seuraavat historialliset lähteet:\nLähde 1: [KUVAUS]\nLähde 2: [KUVAUS]\n(Lähde 3: [KUVAUS, jos on])\n\nLuo strukturoitu vertailukehikko, jonka avulla oppilaat voivat vertailla lähteiden näkökulmia:\n1. Luo vertailutaulukko (tekijä, aika, näkökulma, tarkoitus, luotettavuus)\n2. Tunnista yhtäläisyydet lähteiden välillä\n3. Tunnista ristiriidat tai erot näkökulmissa\n4. Esitä pohdintakysymykset: miksi lähteet eroavat toisistaan?\n5. Ohjaa johtopäätösten tekemiseen: mitä nämä lähteet yhdessä kertovat historiallisesta totuudesta?"
+      }
+    ]
+  },
+  {
+    "id": "s8",
+    "title": "Luonnontieteellisen kokeen suunnittelu",
+    "description": "Ohjaa oppilaita koko tieteellisen prosessin läpi — hypoteesista havainnoinnin kautta johtopäätöksiin.",
+    "subject": "science",
+    "level": "lower_secondary",
+    "tool": "any",
+    "use_case": "lesson_planning",
+    "tags": [
+      "luonnontieteet",
+      "koe",
+      "hypoteesi",
+      "tieteellinen menetelmä",
+      "havainnointi"
+    ],
+    "tips": "Tämä skill toimii parhaiten ennen fysiikan tai kemian koetta. Käytä vaiheiden väleissä luokkahuonekeskustelua — AI antaa rungon, mutta oppilaiden ajattelu täyttää sen.",
+    "is_pro": true,
+    "is_approved": true,
+    "submitted_by": null,
+    "created_at": "2024-10-10T10:00:00Z",
+    "steps": [
+      {
+        "step_number": 1,
+        "title": "Muotoile hypoteesi",
+        "description": "Auta oppilaita rakentamaan tieteellisesti pätevä hypoteesi esimerkkien ja ohjaavien kysymysten avulla.",
+        "prompt_text": "Olen luonnontieteiden opettaja. Oppilaamme tutkivat aihetta [TUTKIMUSAIHE, esim. 'veden pintajännitys' tai 'hiivan toiminta sokeriliuoksessa'].\n\nAuta oppilaita muotoilemaan tieteellisesti pätevä hypoteesi. Luo oppilaille:\n1. Selitys siitä, mitä hyvä hypoteesi tarkoittaa (Jos... niin... koska... -rakenne)\n2. Kolme esimerkkihypoteesia tästä aiheesta (eri vahvuisia)\n3. Kolme huonoa hypoteesiesimerkkiä ja selitys, miksi ne eivät toimi\n4. Ohjaavat kysymykset, joilla oppilas löytää oman hypoteesipohjan:\n   - Mitä muuttujia ilmiöön liittyy?\n   - Mitä olet jo havainnut tai tiedät aiheesta?\n   - Mitä odotat tapahtuvan ja miksi?\n\nKirjoita materiaalit suoraan oppilaille soveltuvalla kielellä."
+      },
+      {
+        "step_number": 2,
+        "title": "Suunnittele koeasetelma",
+        "description": "Rakenna turvallinen, koulussa toteutettavissa oleva koeasetelma muuttujineen ja vaiheineen.",
+        "prompt_text": "Tutkimushypoteesimme on: [HYPOTEESI]\n\nAuta suunnittelemaan turvallinen ja koulussa toteutettavissa oleva koeasetelma.\n\nKoesuunnitelman tulee sisältää:\n1. Tarvittavat materiaalit ja välineet (lueteltuina)\n2. Muuttujat: riippumaton, riippuva ja vakioitavat muuttujat\n3. Vaiheittainen koeohje (numeroitu lista)\n4. Turvallisuusohjeet ja varotoimenpiteet\n5. Toistomäärä ja vertailuryhmä (kontrolliryhmä tarvittaessa)\n6. Arvio keston ja tarvittavan tilan suhteen\n\nVarmista, että koeasetelma on toteuttavissa tavallisessa luokkahuoneessa tai kouluympäristössä."
+      },
+      {
+        "step_number": 3,
+        "title": "Luo havainnointilomake",
+        "description": "Tee selkeä lomake, jonka oppilaat täyttävät kokeen aikana häiriintymättä.",
+        "prompt_text": "Kokeemme tutkii: [TUTKIMUSKYSYMYS]\nHypoteesimme on: [HYPOTEESI]\nMuuttujamme ovat:\n- Riippumaton muuttuja: [MUUTTUJA]\n- Riippuva muuttuja: [MUUTTUJA]\n\nLuo selkeä havainnointilomake, jonka oppilaat täyttävät kokeen aikana. Lomakkeessa tulee olla:\n1. Otsikkotiedot (nimi, päiväys, tutkimuskysymys, hypoteesi)\n2. Taulukko kvantitatiivisille mittaustuloksille (riittävä määrä rivejä toistoja varten)\n3. Tila kvalitatiivisille havainnoille (mitä näit, mitä huomasit?)\n4. Osio poikkeamien kirjaamiseen (meni suunnitelmasta poikkeavasti)\n5. Alustavat havainnot ennen analysointia\n\nMuotoile lomake sellaiseksi, että täyttäminen ei häiritse itse kokeen tekemistä."
+      },
+      {
+        "step_number": 4,
+        "title": "Ohjaa johtopäätösten tekeminen",
+        "description": "Johdata oppilaat kokeen tuloksista tieteellisiin johtopäätöksiin ohjaavien kysymysten avulla.",
+        "prompt_text": "Kokeestamme saadut tulokset ovat:\n[LIITÄ TULOKSET TAI TULOSTAULUKKO]\n\nHypoteesimme oli: [HYPOTEESI]\n\nAuta oppilaita tekemään tieteelliset johtopäätökset tuloksista. Luo ohjattu johtopäätösprosessi:\n1. Vastasiko tulos hypoteesiimme? (kyllä/ei/osittain — ja miksi?)\n2. Miten analysoimme tuloksia: keskiarvot, trendit, poikkeamat\n3. Mitkä tekijät saattoivat vaikuttaa tuloksiin (virhelähteet)?\n4. Miten parantaisimme koeasetelmaa, jos tekisimme sen uudelleen?\n5. Mitä jatkokysymyksiä tulosten pohjalta herää?\n\nKirjoita se oppilaille ohjaavana kysymyssarjana, joka johtaa lopulliseen kirjalliseen johtopäätöslausumaan."
+      }
+    ]
+  }
+]

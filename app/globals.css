@@ -2,24 +2,113 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Foundational variables ────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FDF8F0;
+  --foreground: #2D2A26;
+  --font-inter: "Inter", system-ui, sans-serif;
+  --font-fraunces: "Fraunces", Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Base: paper texture + Inter body ────────────────────────────────────── */
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: var(--foreground);
+  background-color: #FDF8F0;
+  /* Subtle grain texture — feels like quality paper, not a glossy screen */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ── Fraunces for all headings ─────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* ── Card hover: left accent instead of box-shadow ────────────────────────── */
+/*
+ * Cards use a transparent 3px left border at all times (reserves space),
+ * and reveal teal on hover — zero layout shift.
+ */
+.card-accent {
+  border-left-width: 3px;
+  border-left-color: transparent;
+  border-left-style: solid;
+  transition: border-left-color 220ms ease;
+}
+.card-accent:hover {
+  border-left-color: #1A7A6D;
+}
+
+/* ── Staggered card fade-in ─────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-card-in {
+  animation: fadeInUp 0.45s ease both;
 }
 
+/* ── Copy button checkmark pop ─────────────────────────────────────────── */
+@keyframes checkPop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.animate-check {
+  animation: checkPop 0.3s ease both;
+}
+
+/* ── Decorative section divider ────────────────────────────────────────── */
+.divider-ornament {
+  position: relative;
+  height: 1px;
+  background: #E8E2D9;
+  margin: 2.5rem 0;
+}
+.divider-ornament::after {
+  content: '◆';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #FDF8F0;
+  padding: 0 10px;
+  color: #C4725A;
+  font-size: 8px;
+  line-height: 1;
+}
+
+/* ── Wavy highlight (hero keyword) ─────────────────────────────────────── */
+.keyword-highlight {
+  position: relative;
+  display: inline-block;
+}
+.keyword-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: -2px;
+  right: -2px;
+  height: 38%;
+  background: rgba(212, 160, 23, 0.22); /* mustard glow */
+  border-radius: 2px;
+  z-index: -1;
+}
+
+/* ── Prose utility ────────────────────────────────────────────────────── */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
