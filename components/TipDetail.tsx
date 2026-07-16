@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Tip, SUBJECT_LABELS, LEVEL_LABELS, TOOL_LABELS, USE_CASE_LABELS } from '@/lib/types';
 import LikeButton from '@/components/LikeButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import CommentSection from '@/components/CommentSection';
@@ -28,6 +29,7 @@ const SUBJECT_DOT: Record<string, string> = {
 };
 
 /* Language-specific syntax highlighting colors */
+const LANGUAGE_COLORS: Record<string, string> = {
   javascript: '#F7DF1E',
   python: '#3776AB',
   sql: '#E34C26',
@@ -49,13 +51,13 @@ type Props = {
   tip: Tip;
 };
 
-export default function TipDetail({ code }: Props) {
+export default function TipDetail({ tip }: Props) {
   const [copied, setCopied] = useState(false);
 
   // Track view once per session
   useEffect(() => {
-    trackView('tip'.id);
-  }, [code.id]);
+    trackView('tip', tip.id);
+  }, [tip.id]);
 
   const handleCopy = async () => {
     try {
@@ -69,12 +71,12 @@ export default function TipDetail({ code }: Props) {
       document.execCommand('copy');
       document.body.removeChild(textarea);
     }
-    trackCopy('tip'.id);
+    trackCopy('tip', tip.id);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const dotColor = SUBJECT_DOT[code.subject] ?? '#8A8070';
+  const dotColor = SUBJECT_DOT[tip.subject] ?? '#8A8070';
   
 
   return (
@@ -98,21 +100,21 @@ export default function TipDetail({ code }: Props) {
             style={{ backgroundColor: dotColor }}
             aria-hidden="true"
           />
-          {SUBJECT_LABELS[code.subject]}
+          {SUBJECT_LABELS[tip.subject]}
         </span>
         <span className="inline-flex items-center gap-1.5 text-sm text-muted">
           <span className="inline-block w-2 h-2 rounded-full bg-teal/60 shrink-0" aria-hidden="true" />
-          {LEVEL_LABELS[code.level]}
+          {LEVEL_LABELS[tip.level]}
         </span>
         <span className="inline-flex items-center gap-1.5 text-sm text-muted">
-          <span className="text-base">{TOOL_ICONS[code.tool] ?? '🔧'}</span>
-          {TOOL_LABELS[code.tool]}
+          <span className="text-base">{TOOL_ICONS[tip.tool] ?? '🔧'}</span>
+          {TOOL_LABELS[tip.tool]}
         </span>
         <span className="inline-flex items-center gap-1.5 text-sm text-muted">
           <span className="inline-block w-2 h-2 rounded-full bg-mustard/60 shrink-0" aria-hidden="true" />
-          {USE_CASE_LABELS[code.use_case]}
+          {USE_CASE_LABELS[tip.use_case]}
         </span>
-        {code.is_pro && (
+        {tip.is_pro && (
           <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold tracking-wide bg-mustard text-white">
             PRO
           </span>
@@ -121,55 +123,50 @@ export default function TipDetail({ code }: Props) {
 
       {/* Title + description */}
       <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3 leading-tight">
-        {code.title}
+        {tip.title}
       </h1>
-      <p className="text-base text-muted leading-relaxed mb-4">{code.description}</p>
+      <p className="text-base text-muted leading-relaxed mb-4">{tip.description}</p>
 
       {/* Stats + like row */}
       <div className="flex items-center gap-4 mb-8 flex-wrap">
         <LikeButton
-          item_type="code"
-          item_id={code.id}
-          initial_like_count={code.like_count ?? 0}
+          item_type="tip"
+          item_id={tip.id}
+          initial_like_count={tip.like_count ?? 0}
           size="detail"
         />
-        <BookmarkButton item_type="code" item_id={code.id} size="detail" />
-        {((code.view_count ?? 0) > 0 || (code.copy_count ?? 0) > 0) && (
+        <BookmarkButton item_type="tip" item_id={tip.id} size="detail" />
+        {((tip.view_count ?? 0) > 0 || (tip.copy_count ?? 0) > 0) && (
           <div className="flex items-center gap-3 text-xs text-muted/60">
-            {(code.view_count ?? 0) > 0 && (
+            {(tip.view_count ?? 0) > 0 && (
               <span title="Katselukerrat" className="flex items-center gap-1">
-                <span>👁</span> {code.view_count}
+                <span>👁</span> {tip.view_count}
               </span>
             )}
-            {(code.copy_count ?? 0) > 0 && (
+            {(tip.copy_count ?? 0) > 0 && (
               <span title="Kopiointikerrat" className="flex items-center gap-1">
-                <span>📋</span> {code.copy_count}
+                <span>📋</span> {tip.copy_count}
               </span>
             )}
           </div>
         )}
       </div>
 
-      {/* Code block section */}
+      {/* Tip text section */}
       <section className="mb-8">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-serif text-lg font-semibold text-foreground">Koodi</h2>
-          <span
-            className="inline-flex items-center px-3 py-1 rounded text-xs font-semibold text-white"
-            style={{ backgroundColor: langColor }}
-          >
-          </span>
+          <h2 className="font-serif text-lg font-semibold text-foreground">Vinkki</h2>
         </div>
 
         <div className="relative">
           <pre
-            className={`bg-card border border-warm-border rounded-2xl p-6 text-sm text-foreground whitespace-pre-wrap font-mono leading-relaxed overflow-x-auto${code.is_pro ? ' select-none' : ''}`}
+            className={`bg-card border border-warm-border rounded-2xl p-6 text-sm text-foreground whitespace-pre-wrap leading-relaxed overflow-x-auto${tip.is_pro ? ' select-none' : ''}`}
           >
             {tip.tip_text}
           </pre>
 
           {/* Pro blur overlay */}
-          {code.is_pro && (
+          {tip.is_pro && (
             <div className="absolute inset-0 rounded-2xl overflow-hidden">
               <div className="absolute inset-0 backdrop-blur-sm bg-background/40" />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
@@ -180,7 +177,7 @@ export default function TipDetail({ code }: Props) {
                   </span>
                   <h3 className="font-serif text-lg font-bold text-foreground mb-2">Avaa Pro-tilillä</h3>
                   <p className="text-sm text-muted mb-6">
-                    Tämä koodi on saatavilla Pro-tilaajille. Saat käyttöön kaikki PRO-koodit yhdellä tilauksella.
+                    Tämä vinkki on saatavilla Pro-tilaajille. Saat käyttöön kaikki PRO-vinkit yhdellä tilauksella.
                   </p>
                   <button className="w-full py-3 px-6 rounded-xl bg-teal text-white font-semibold text-base hover:bg-teal-dark transition-colors">
                     Avaa Pro-tilillä — 9 €/kk
@@ -192,8 +189,8 @@ export default function TipDetail({ code }: Props) {
           )}
         </div>
 
-        {/* Copy button — shown only for free codes */}
-        {!code.is_pro && (
+        {/* Copy button — shown only for free tips */}
+        {!tip.is_pro && (
           <div className="mt-4 flex">
             <button
               onClick={handleCopy}
@@ -216,7 +213,7 @@ export default function TipDetail({ code }: Props) {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
-                  Kopioi koodi
+                  Kopioi vinkki
                 </>
               )}
             </button>
@@ -225,9 +222,9 @@ export default function TipDetail({ code }: Props) {
       </section>
 
       {/* Tags */}
-      {code.tags.length > 0 && (
+      {tip.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-8">
-          {code.tags.map((tag) => (
+          {tip.tags.map((tag) => (
             <span
               key={tag}
               className="px-3 py-1 rounded-full text-xs font-medium bg-terracotta-light text-terracotta"
@@ -240,9 +237,9 @@ export default function TipDetail({ code }: Props) {
 
       {/* Comments */}
       <CommentSection
-        item_type="code"
-        item_id={code.id}
-        initial_comment_count={code.comment_count}
+        item_type="tip"
+        item_id={tip.id}
+        initial_comment_count={tip.comment_count}
       />
     </div>
   );
