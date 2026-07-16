@@ -136,7 +136,7 @@ function CommentItem({
 /* ── CommentSection ─────────────────────────────────────────────── */
 
 type Props = {
-  item_type: 'prompt' | 'skill' | 'code';
+  item_type: 'prompt' | 'skill' | 'code' | 'tip';
   item_id: string;
   initial_comment_count?: number;
 };

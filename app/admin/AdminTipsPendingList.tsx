@@ -6,11 +6,9 @@ import {
   SUBJECT_LABELS,
   LEVEL_LABELS,
   TOOL_LABELS,
-  
   type Subject,
   type Level,
   type Tool,
-  
 } from '@/lib/types';
 
 export type SubmittedTip = {
@@ -82,9 +80,6 @@ function TipCard({
           </div>
           {/* Meta badges */}
           <div className="flex flex-wrap gap-1.5 shrink-0">
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 font-medium">
-              {CODE_LANGUAGE_LABELS[item.code_language as CodeLanguage] ?? item.code_language}
-            </span>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-teal-light text-teal font-medium">
               {SUBJECT_LABELS[item.subject as Subject] ?? item.subject}
             </span>
@@ -100,12 +95,12 @@ function TipCard({
         {/* Description */}
         <p className="text-sm text-muted mb-4 leading-relaxed">{item.description}</p>
 
-        {/* Expand/collapse code */}
+        {/* Expand/collapse tip */}
         <button
           onClick={() => setExpanded((v) => !v)}
           className="text-sm text-teal hover:text-teal-dark font-medium transition-colors mb-3"
         >
-          {expanded ? 'Piilota koodi ▲' : 'Näytä koodi ▼'}
+          {expanded ? 'Piilota vinkki ▲' : 'Näytä vinkki ▼'}
         </button>
 
         {expanded && (
@@ -164,26 +159,7 @@ type Props = {
 
 export default function AdminTipsPendingList({ initialItems }: Props) {
   const [items, setItems] = useState<SubmittedTip[]>(initialItems);
-  const [fading, setFading] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState<Set<string>>(new Set());
-
-  /** Triggers the fade-out animation then removes the card from state. */
-  const removeWithAnimation = (id: string) => {
-    setFading((prev) => new Set(prev).add(id));
-    setTimeout(() => {
-      setItems((prev) => prev.filter((item) => item.id !== id));
-      setFading((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-      setLoading((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-    }, 420); // slightly longer than CSS transition
-  };
 
   const handleToggle = async (id: string, currentApproved: boolean) => {
     setLoading((prev) => new Set(prev).add(id));
@@ -227,7 +203,7 @@ export default function AdminTipsPendingList({ initialItems }: Props) {
         <TipCard
           key={item.id}
           item={item}
-          isFading={fading.has(item.id)}
+          isFading={false}
           isLoading={loading.has(item.id)}
           onToggle={() => handleToggle(item.id, item.is_approved)}
         />

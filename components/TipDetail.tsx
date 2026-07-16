@@ -28,25 +28,6 @@ const SUBJECT_DOT: Record<string, string> = {
   general: '#8A8070',
 };
 
-/* Language-specific syntax highlighting colors */
-const LANGUAGE_COLORS: Record<string, string> = {
-  javascript: '#F7DF1E',
-  python: '#3776AB',
-  sql: '#E34C26',
-  html: '#E34C26',
-  css: '#264DE4',
-  java: '#007396',
-  csharp: '#239120',
-  cpp: '#00599C',
-  php: '#777BB4',
-  ruby: '#CC342D',
-  go: '#00ADD8',
-  rust: '#CE4833',
-  typescript: '#3178C6',
-  bash: '#4EAA25',
-  other: '#8A8070',
-};
-
 type Props = {
   tip: Tip;
 };

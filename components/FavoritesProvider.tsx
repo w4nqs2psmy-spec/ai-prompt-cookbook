@@ -22,7 +22,7 @@ type FavCtx = {
   /** Set of saved item_ids (for prompts, skills, and codes) */
   savedIds: Set<string>;
   /** Optimistically toggle an item in/out of favorites */
-  toggle: (item_type: 'prompt' | 'skill' | 'code', item_id: string) => Promise<void>;
+  toggle: (item_type: 'prompt' | 'skill' | 'code' | 'tip', item_id: string) => Promise<void>;
   /** true while initial fetch is in-flight */
   loading: boolean;
 };
@@ -73,7 +73,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   }, [user, userLoading]);
 
   const toggle = useCallback(
-    async (item_type: 'prompt' | 'skill' | 'code', item_id: string) => {
+    async (item_type: 'prompt' | 'skill' | 'code' | 'tip', item_id: string) => {
       const wasSaved = savedIds.has(item_id);
 
       // Optimistic update

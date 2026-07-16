@@ -3,7 +3,7 @@
  * Safe to call from any client component — errors are swallowed silently.
  */
 
-function post(type: 'prompt' | 'skill' | 'code', id: string, action: 'view' | 'copy') {
+function post(type: 'prompt' | 'skill' | 'code' | 'tip', id: string, action: 'view' | 'copy') {
   fetch('/api/track', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -17,7 +17,7 @@ function post(type: 'prompt' | 'skill' | 'code', id: string, action: 'view' | 'c
  * Track a page view. Deduplicates per session using sessionStorage.
  * Safe to call on every render — will only fire once per session per item.
  */
-export function trackView(type: 'prompt' | 'skill' | 'code', id: string): void {
+export function trackView(type: 'prompt' | 'skill' | 'code' | 'tip', id: string): void {
   if (typeof window === 'undefined') return;
   const key = `viewed_${type}_${id}`;
   if (sessionStorage.getItem(key)) return;
@@ -28,7 +28,7 @@ export function trackView(type: 'prompt' | 'skill' | 'code', id: string): void {
 /**
  * Track a copy/open-in-AI button click. Fires on every click (no dedup).
  */
-export function trackCopy(type: 'prompt' | 'skill' | 'code', id: string): void {
+export function trackCopy(type: 'prompt' | 'skill' | 'code' | 'tip', id: string): void {
   if (typeof window === 'undefined') return;
   post(type, id, 'copy');
 }

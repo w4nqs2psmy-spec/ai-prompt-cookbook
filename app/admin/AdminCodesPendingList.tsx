@@ -164,26 +164,7 @@ type Props = {
 
 export default function AdminCodesPendingList({ initialItems }: Props) {
   const [items, setItems] = useState<SubmittedCode[]>(initialItems);
-  const [fading, setFading] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState<Set<string>>(new Set());
-
-  /** Triggers the fade-out animation then removes the card from state. */
-  const removeWithAnimation = (id: string) => {
-    setFading((prev) => new Set(prev).add(id));
-    setTimeout(() => {
-      setItems((prev) => prev.filter((item) => item.id !== id));
-      setFading((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-      setLoading((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-    }, 420); // slightly longer than CSS transition
-  };
 
   const handleToggle = async (id: string, currentApproved: boolean) => {
     setLoading((prev) => new Set(prev).add(id));
@@ -227,7 +208,7 @@ export default function AdminCodesPendingList({ initialItems }: Props) {
         <CodeCard
           key={item.id}
           item={item}
-          isFading={fading.has(item.id)}
+          isFading={false}
           isLoading={loading.has(item.id)}
           onToggle={() => handleToggle(item.id, item.is_approved)}
         />
