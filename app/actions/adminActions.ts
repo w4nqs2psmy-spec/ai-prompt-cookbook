@@ -56,3 +56,41 @@ export async function deletePromptAction(id: string): Promise<void> {
 
   revalidatePath('/admin');
 }
+
+/**
+ * Toggle code approval status: toggle is_approved between true and false.
+ * Uses service role client to bypass RLS.
+ */
+export async function toggleCodeApprovalAction(id: string, approved: boolean): Promise<void> {
+  await assertAdmin();
+
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from('codes')
+    .update({ is_approved: approved })
+    .eq('id', id);
+
+  if (error) throw new Error('Hyväksynnän muutos epäonnistui: ' + error.message);
+
+  revalidatePath('/');
+  revalidatePath('/admin');
+}
+
+/**
+ * Toggle tip approval status: toggle is_approved between true and false.
+ * Uses service role client to bypass RLS.
+ */
+export async function toggleTipApprovalAction(id: string, approved: boolean): Promise<void> {
+  await assertAdmin();
+
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from('tips')
+    .update({ is_approved: approved })
+    .eq('id', id);
+
+  if (error) throw new Error('Hyväksynnän muutos epäonnistui: ' + error.message);
+
+  revalidatePath('/');
+  revalidatePath('/admin');
+}

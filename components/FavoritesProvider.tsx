@@ -19,10 +19,10 @@ import {
 import { useUser } from './UserProvider';
 
 type FavCtx = {
-  /** Set of saved item_ids (for both prompts and skills) */
+  /** Set of saved item_ids (for prompts, skills, and codes) */
   savedIds: Set<string>;
   /** Optimistically toggle an item in/out of favorites */
-  toggle: (item_type: 'prompt' | 'skill', item_id: string) => Promise<void>;
+  toggle: (item_type: 'prompt' | 'skill' | 'code', item_id: string) => Promise<void>;
   /** true while initial fetch is in-flight */
   loading: boolean;
 };
@@ -50,17 +50,19 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
     fetch('/api/favorites')
       .then((r) => {
-        if (!r.ok) return { prompts: [], skills: [] };
+        if (!r.ok) return { prompts: [], skills: [], codes: [] };
         return r.json() as Promise<{
           prompts?: { id: string }[];
           skills?: { id: string }[];
+          codes?: { id: string }[];
         }>;
       })
-      .then(({ prompts = [], skills = [] }) => {
+      .then(({ prompts = [], skills = [], codes = [] }) => {
         setSavedIds(
           new Set([
             ...prompts.map((p) => p.id),
             ...skills.map((s) => s.id),
+            ...codes.map((c) => c.id),
           ])
         );
       })
@@ -71,7 +73,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   }, [user, userLoading]);
 
   const toggle = useCallback(
-    async (item_type: 'prompt' | 'skill', item_id: string) => {
+    async (item_type: 'prompt' | 'skill' | 'code', item_id: string) => {
       const wasSaved = savedIds.has(item_id);
 
       // Optimistic update

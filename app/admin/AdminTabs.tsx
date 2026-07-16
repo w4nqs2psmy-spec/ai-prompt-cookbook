@@ -6,20 +6,28 @@ import type { ReactNode } from 'react';
 type Props = {
   promptCount: number;
   skillCount: number;
+  codeCount: number;
+  tipCount: number;
   commentCount: number;
   promptsContent: ReactNode;
   skillsContent: ReactNode;
+  codesContent: ReactNode;
+  tipsContent: ReactNode;
   commentsContent: ReactNode;
 };
 
-type Tab = 'prompts' | 'skills' | 'comments';
+type Tab = 'prompts' | 'skills' | 'codes' | 'tips' | 'comments';
 
 export default function AdminTabs({
   promptCount,
   skillCount,
+  codeCount,
+  tipCount,
   commentCount,
   promptsContent,
   skillsContent,
+  codesContent,
+  tipsContent,
   commentsContent,
 }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>('prompts');
@@ -27,6 +35,8 @@ export default function AdminTabs({
   const tabs: { key: Tab; label: string; count: number }[] = [
     { key: 'prompts', label: 'Promptit', count: promptCount },
     { key: 'skills', label: 'Skillit', count: skillCount },
+    { key: 'codes', label: 'Koodit', count: codeCount },
+    { key: 'tips', label: 'Vinkit', count: tipCount },
     { key: 'comments', label: 'Kommentit', count: commentCount },
   ];
 
@@ -62,6 +72,8 @@ export default function AdminTabs({
       {/* Tab content */}
       {activeTab === 'prompts' && promptsContent}
       {activeTab === 'skills' && skillsContent}
+      {activeTab === 'codes' && codesContent}
+      {activeTab === 'tips' && tipsContent}
       {activeTab === 'comments' && commentsContent}
     </div>
   );

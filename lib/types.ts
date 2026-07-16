@@ -115,3 +115,81 @@ export type Skill = {
   like_count?: number;
   comment_count?: number;
 };
+
+/* ── Codes ───────────────────────────────────────────────────── */
+
+export type CodeLanguage =
+  | 'javascript'
+  | 'python'
+  | 'sql'
+  | 'html'
+  | 'css'
+  | 'java'
+  | 'csharp'
+  | 'cpp'
+  | 'php'
+  | 'ruby'
+  | 'go'
+  | 'rust'
+  | 'typescript'
+  | 'bash'
+  | 'other';
+
+export type Code = {
+  id: string;
+  title: string;
+  code_text: string;
+  code_language: CodeLanguage;
+  description: string;
+  subject: Subject;
+  level: Level;
+  tool: Tool;
+  use_case: UseCase;
+  tags: string[];
+  is_pro: boolean;
+  created_at: string;
+  submitted_by?: string | null;
+  view_count?: number;
+  copy_count?: number;
+  like_count?: number;
+  comment_count?: number;
+};
+
+export const CODE_LANGUAGE_LABELS: Record<CodeLanguage, string> = {
+  javascript: 'JavaScript',
+  python: 'Python',
+  sql: 'SQL',
+  html: 'HTML',
+  css: 'CSS',
+  java: 'Java',
+  csharp: 'C#',
+  cpp: 'C++',
+  php: 'PHP',
+  ruby: 'Ruby',
+  go: 'Go',
+  rust: 'Rust',
+  typescript: 'TypeScript',
+  bash: 'Bash',
+  other: 'Muu',
+};
+
+/* ── Tips ────────────────────────────────────────────────────── */
+
+export type Tip = {
+  id: string;
+  title: string;
+  tip_text: string;
+  description: string;
+  subject: Subject;
+  level: Level;
+  tool: Tool;
+  use_case: UseCase;
+  tags: string[];
+  is_pro: boolean;
+  created_at: string;
+  submitted_by?: string | null;
+  view_count?: number;
+  copy_count?: number;
+  like_count?: number;
+  comment_count?: number;
+};

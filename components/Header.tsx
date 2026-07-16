@@ -50,6 +50,12 @@ export default async function Header() {
             <Link href="/skills" className={NAV_LINK}>
               Skillit
             </Link>
+            <Link href="/codes" className={NAV_LINK}>
+              Koodit
+            </Link>
+            <Link href="/tips" className={NAV_LINK}>
+              Vinkit
+            </Link>
             <Link href="/community" className={NAV_LINK}>
               Yhteisö
             </Link>

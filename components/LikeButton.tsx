@@ -18,7 +18,7 @@ import { getCachedLiked, setCachedLiked } from '@/lib/likeCache';
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 type Props = {
-  item_type: 'prompt' | 'skill';
+  item_type: 'prompt' | 'skill' | 'code';
   item_id: string;
   initial_like_count: number;
   size?: 'card' | 'detail';

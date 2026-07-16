@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const { type, id, action } = body as { type?: string; id?: string; action?: string };
 
     // Validate type
-    if (type !== 'prompt' && type !== 'skill') {
+    if (type !== 'prompt' && type !== 'skill' && type !== 'code' && type !== 'tip') {
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
     }
 
@@ -23,7 +23,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, skipped: true });
     }
 
-    const p_table = type === 'prompt' ? 'prompts' : 'skills';
+    const p_table =
+      type === 'prompt' ? 'prompts'
+      : type === 'skill' ? 'skills'
+      : type === 'code' ? 'codes'
+      : 'tips'; // type === 'tip'
     const p_column = action === 'view' ? 'view_count' : 'copy_count';
 
     const admin = createAdminClient();

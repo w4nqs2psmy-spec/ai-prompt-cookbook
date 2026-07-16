@@ -143,6 +143,12 @@ export default function SiteFooter() {
           <Link href="/skills/submit" className="text-xs text-muted/60 hover:text-muted transition-colors">
             + Jaa skill
           </Link>
+          <Link href="/codes/submit" className="text-xs text-muted/60 hover:text-muted transition-colors">
+            + Lähetä koodi
+          </Link>
+          <Link href="/tips/submit" className="text-xs text-muted/60 hover:text-muted transition-colors">
+            + Lähetä vinkki
+          </Link>
         </div>
       </div>
 
