@@ -9,7 +9,7 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
  * With ?item_type=X&item_id=Y → returns { saved: boolean }
  */
 export async function GET(req: NextRequest) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -92,7 +92,7 @@ export async function GET(req: NextRequest) {
  * Adds item to favorites. Returns { saved: true }.
  */
 export async function POST(req: NextRequest) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
  * Removes item from favorites. Returns { saved: false }.
  */
 export async function DELETE(req: NextRequest) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

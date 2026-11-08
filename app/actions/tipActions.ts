@@ -31,7 +31,7 @@ function toRow(data: TipFormFields, isApproved: boolean) {
  */
 export async function insertAdminTipAction(data: TipFormFields): Promise<void> {
   // Verify caller is the admin
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -60,7 +60,7 @@ export async function insertAdminTipAction(data: TipFormFields): Promise<void> {
  * is_pro is always false for public submissions.
  */
 export async function insertPublicTipAction(data: TipFormFields): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

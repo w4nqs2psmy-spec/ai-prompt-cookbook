@@ -9,7 +9,7 @@ import { revalidatePath } from 'next/cache';
  * Called at the start of every admin action — never trust the client.
  */
 async function assertAdmin(): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

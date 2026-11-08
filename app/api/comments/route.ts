@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
  * Increments comment_count on the prompt/skill.
  */
 export async function POST(req: NextRequest) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
  * Decrements comment_count on the prompt/skill.
  */
 export async function DELETE(req: NextRequest) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

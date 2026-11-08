@@ -5,7 +5,7 @@ import { getPrompts, getPromptByIdAsync } from '@/lib/prompts';
 import PromptDetail from '@/components/PromptDetail';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
@@ -15,7 +15,8 @@ export function generateStaticParams() {
 }
 
 export default async function PromptPage({ params }: Props) {
-  const prompt = await getPromptByIdAsync(params.id);
+  const { id } = await params;
+  const prompt = await getPromptByIdAsync(id);
   if (!prompt) notFound();
   return <PromptDetail prompt={prompt} />;
 }

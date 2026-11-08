@@ -4,11 +4,12 @@ import { getSkills, getApprovedSupabaseSkills } from '@/lib/skills';
 import SkillsHeroSearch from '@/components/SkillsHeroSearch';
 
 type Props = {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 };
 
 export default async function SkillsPage({ searchParams }: Props) {
-  const initialPage = Math.max(1, parseInt(searchParams.page ?? '1', 10) || 1);
+  const { page } = await searchParams;
+  const initialPage = Math.max(1, parseInt(page ?? '1', 10) || 1);
 
   const [supabaseSkills] = await Promise.all([getApprovedSupabaseSkills()]);
   const mockSkills = getSkills();

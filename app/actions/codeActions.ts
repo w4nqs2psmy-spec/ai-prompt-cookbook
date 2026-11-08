@@ -32,7 +32,7 @@ function toRow(data: CodeFormFields, isApproved: boolean) {
  */
 export async function insertAdminCodeAction(data: CodeFormFields): Promise<void> {
   // Verify caller is the admin
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -61,7 +61,7 @@ export async function insertAdminCodeAction(data: CodeFormFields): Promise<void>
  * is_pro is always false for public submissions.
  */
 export async function insertPublicCodeAction(data: CodeFormFields): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

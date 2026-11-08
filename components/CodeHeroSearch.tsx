@@ -62,7 +62,7 @@ export default function CodeHeroSearch({
   /* ── Filter-change fade transition ────────────────────────────────── */
   const [gridVisible, setGridVisible] = useState(true);
   const [gridKey, setGridKey] = useState(0);
-  const fadeTimer = useRef<ReturnType<typeof setTimeout>>();
+  const fadeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   /* ── URL sync helper ───────────────────────────────────────────────── */
   const pushPage = useCallback(

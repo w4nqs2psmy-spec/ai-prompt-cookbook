@@ -152,7 +152,7 @@ export default function CommentSection({ item_type, item_id, initial_comment_cou
   const [content, setContent] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
-  const toastTimer = useRef<ReturnType<typeof setTimeout>>();
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const isUUID = UUID_RE.test(item_id);
 

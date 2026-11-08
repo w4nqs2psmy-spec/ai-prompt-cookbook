@@ -15,7 +15,7 @@ const NAV_LINK =
   'px-3 py-1.5 text-sm font-medium text-muted hover:text-foreground hover:bg-warm-border/40 rounded-lg transition-colors inline-flex items-center';
 
 export default async function Header() {
-  const supabase = createClient();
+  const supabase = await createClient();
   // getSession() reads from the local cookie — no network round-trip.
   // This is safe for display-only auth checks (nav links, AuthButton).
   // Individual API routes and server actions still call getUser() where

@@ -3,11 +3,12 @@ import { getCodeByIdAsync } from '@/lib/codes';
 import CodeDetail from '@/components/CodeDetail';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function CodeDetailPage({ params }: Props) {
-  const code = await getCodeByIdAsync(params.id);
+  const { id } = await params;
+  const code = await getCodeByIdAsync(id);
 
   if (!code) {
     notFound();
