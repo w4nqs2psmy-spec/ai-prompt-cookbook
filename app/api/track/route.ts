@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { resolveTrackRpc } from '@/lib/trackRpc';
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -23,19 +24,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, skipped: true });
     }
 
-    const p_table =
-      type === 'prompt' ? 'prompts'
-      : type === 'skill' ? 'skills'
-      : type === 'code' ? 'codes'
-      : 'tips'; // type === 'tip'
-    const p_column = action === 'view' ? 'view_count' : 'copy_count';
+    const { fn, args } = resolveTrackRpc(type, action, id);
 
     const admin = createAdminClient();
-    const { error } = await admin.rpc('increment_count', {
-      p_table,
-      p_id: id,
-      p_column,
-    });
+    const { error } = await admin.rpc(fn, args);
 
     if (error) {
       console.error('increment_count error:', error);
