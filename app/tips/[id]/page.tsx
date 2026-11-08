@@ -3,11 +3,12 @@ import { getTipByIdAsync } from '@/lib/tips';
 import TipDetail from '@/components/TipDetail';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function TipDetailPage({ params }: Props) {
-  const tip = await getTipByIdAsync(params.id);
+  const { id } = await params;
+  const tip = await getTipByIdAsync(id);
 
   if (!tip) {
     notFound();

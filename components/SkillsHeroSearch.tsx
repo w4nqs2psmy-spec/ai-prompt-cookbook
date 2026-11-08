@@ -48,7 +48,7 @@ export default function SkillsHeroSearch({ initialSkills, initialPage = 1 }: Pro
 
   const [gridVisible, setGridVisible] = useState(true);
   const [gridKey, setGridKey] = useState(0);
-  const fadeTimer = useRef<ReturnType<typeof setTimeout>>();
+  const fadeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   /* ── URL sync helper ───────────────────────────────────────────────── */
   const pushPage = useCallback(

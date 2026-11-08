@@ -5,12 +5,12 @@ import { cookies } from 'next/headers';
  * Server-side Supabase client for Server Components, Server Actions,
  * and Route Handlers.
  *
- * Next.js 14: cookies() is synchronous (returns ReadonlyRequestCookies directly).
+ * Next.js 15+: cookies() is async, so this factory is async too.
  * The setAll try/catch silences errors thrown from read-only Server Component
- * contexts — the middleware handles session cookie writes on the response.
+ * contexts — the proxy (proxy.ts) handles session cookie writes on the response.
  */
-export function createClient() {
-  const cookieStore = cookies();
+export async function createClient() {
+  const cookieStore = await cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -27,7 +27,7 @@ export function createClient() {
             );
           } catch {
             // Called from a Server Component — safe to ignore.
-            // Middleware keeps the session fresh.
+            // The proxy keeps the session fresh.
           }
         },
       },

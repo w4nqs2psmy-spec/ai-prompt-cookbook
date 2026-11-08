@@ -7,15 +7,16 @@ import { getPrompts } from '@/lib/prompts';
 import PromptCard from '@/components/PromptCard';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
   return getProfiles().map((p) => ({ id: p.id }));
 }
 
-export default function ProfilePage({ params }: Props) {
-  const profile = getProfileById(params.id);
+export default async function ProfilePage({ params }: Props) {
+  const { id } = await params;
+  const profile = getProfileById(id);
   if (!profile) notFound();
 
   const prompts = getPrompts().filter((p) => p.submitted_by === profile.id);
