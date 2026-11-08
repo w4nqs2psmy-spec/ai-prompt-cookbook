@@ -22,7 +22,7 @@ export default function BookmarkButton({ item_type, item_id, size = 'card' }: Pr
   const { user, loading: userLoading } = useUser();
   const { savedIds, toggle, loading: favLoading } = useFavorites();
   const [showTooltip, setShowTooltip] = useState(false);
-  const tooltipTimer = useRef<ReturnType<typeof setTimeout>>();
+  const tooltipTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // JSON seed items (non-UUID ids) don't support favorites
   if (!UUID_RE.test(item_id)) return null;

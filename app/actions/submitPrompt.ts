@@ -16,7 +16,7 @@ export type SubmitFormData = {
 };
 
 export async function submitPromptAction(data: SubmitFormData): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Start with a passthrough response so we can mutate cookies on it.
   let supabaseResponse = NextResponse.next({ request });
 
@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          // Mirror cookies onto the request for downstream middleware
+          // Mirror cookies onto the request for downstream handlers
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
@@ -54,7 +54,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Only run middleware on routes that require authentication.
+  // Only run the proxy on routes that require authentication.
   // Public pages (/, /promptit, /skills, /community, /api/*, etc.) are
   // excluded so we never pay the Supabase client setup cost for them.
   matcher: ['/submit', '/suosikit', '/suosikit/:path*', '/admin', '/admin/:path*'],

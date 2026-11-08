@@ -26,7 +26,7 @@ function toRow(data: SkillFormFields, isApproved: boolean) {
 /* ── Admin insert ────────────────────────────────────────────── */
 
 export async function insertAdminSkillAction(data: SkillFormFields): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
@@ -56,7 +56,7 @@ export async function insertPublicSkillAction(data: SkillFormFields): Promise<vo
 /* ── Admin approve / delete ──────────────────────────────────── */
 
 async function assertAdmin() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
   if (!user || !adminEmail || user.email !== adminEmail) {

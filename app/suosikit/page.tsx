@@ -57,7 +57,7 @@ function mapSkill(row: any): Skill {
 }
 
 export default async function SuosikitPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

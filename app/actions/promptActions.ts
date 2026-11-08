@@ -33,7 +33,7 @@ function toRow(data: PromptFormFields, isApproved: boolean) {
  */
 export async function insertAdminPromptAction(data: PromptFormFields): Promise<void> {
   // Verify caller is the admin
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
